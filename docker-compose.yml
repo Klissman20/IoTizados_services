@@ -26,6 +26,11 @@ services:
       - 8083:8083
       - 8084:8084
       - 8085:8081
+    links:
+      - mongo
+    volumes:
+      - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
+    
     environment:
       
       EMQX_NAME: IoT_DEV
@@ -36,37 +41,3 @@ services:
       EMQX_DASHBOARD__DEFAULT_PASSWORD: "dashpass"
 
       EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS: 1000
-
-      #EMQX_ALLOW_ANONYMOUS: "false"
-      #EMQX_ACL_NOMATCH: "deny"
-
-      #MONGO CONNECTION
-      #EMQX_AUTH__MONGO__TYPE: single
-      #EMQX_AUTH__MONGO__TOPOLOGY__POOL_SIZE: 1
-      #EMQX_AUTH__MONGO__TOPOLOGY__MAX_OVERFLOW: 0
-
-      #EMQX_AUTH__MONGO__SERVER: "mongo:27017"
-      #EMQX_AUTH__MONGO__POOL: 8
-
-      #EMQX_AUTH__MONGO__LOGIN: "devuser"
-      #EMQX_AUTH__MONGO__PASSWORD: "devpass"
-      #EMQX_AUTH__MONGO__AUTH_SOURCE: admin
-
-      #EMQX_AUTH__MONGO__DATABASE: "iotdev"
-      #EMQX_AUTH__MONGO__AUTH_QUERY__COLLECTION: "emqx_auth_rules"
-
-      #EMQX_AUTH__MONGO__SUPER_QUERY__COLLECTION: "emqx_auth_rules"
-      #EMQX_AUTH__MONGO__SUPER_QUERY__SUPER_FIELD: "is_superuser"
-      #EMQX_AUTH__MONGO__SUPER_QUERY__SELECTOR: "username=%u"
-      #EMQX_AUTH__MONGO__SUPER_QUERY: "off"
-
-      #EMQX_AUTH__MONGO__AUTH_QUERY__PASSWORD_HASH: plain
-      #EMQX_AUTH__MONGO__AUTH_QUERY__PASSWORD_FIELD: "password"
-      #EMQX_AUTH__MONGO__AUTH_QUERY__SELECTOR: "username=%u"
-
-      #ENABLE ACL QUERY
-      #EMQX_AUTH__MONGO__ACL_QUERY: "on"
-      #EMQX_AUTH__MONGO__ACL_QUERY__COLLECTION: "emqx_auth_rules"
-      #EMQX_AUTH__MONGO__ACL_QUERY__SELECTOR: "username=%u"
-
-      #EMQX_LOADED_PLUGINS: "emqx_recon,emqx_retainer,emqx_management,emqx_dashboard,emqx_auth_mongo"
