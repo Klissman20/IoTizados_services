@@ -28,6 +28,8 @@ services:
       - 8085:8081
     links:
       - mongo
+    extra_hosts:
+      - "localhost:192.168.0.109" ##para pruebas en estado de desarrollo
     volumes:
       - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
     
@@ -41,3 +43,6 @@ services:
       EMQX_DASHBOARD__DEFAULT_PASSWORD: "dashpass"
 
       EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS: 1000
+
+      EMQX_AUTHORIZATION__NO_MATCH: deny
+      EMQX_AUTHORIZATION__SOURCES__1__ENABLE: 'false'
