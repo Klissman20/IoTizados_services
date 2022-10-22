@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+
+  node:
+    container_name: node
+    image: "node:14"
+    restart: always
+    working_dir: /home/node/app
+    volumes: 
+      - ./
+    ports:
+      - 3000:3000
+      - 3001:3001
+      - 80:3002
+    links:
+      - mongo
+      - emqx
+    command: sh -c ""
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    restart: always
+    environment:
+      TZ: "${TZ}"
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
+    volumes:
+      - ./mongodata:/data/db
+    ports:
+      - ${MONGO_EXT_PORT}:27017
+
+  emqx:
+    container_name: emqx
+    image: emqx/emqx:5.0.4
+    restart: always
+    ports:
+      - 18083:18083
+      - 1883:1883
+      - 8883:8883
+      - 8083:8083
+      - 8085:8081
+    links:
+      - mongo
+    extra_hosts:
+      - "localhost:192.168.0.106" ##para pruebas en estado de desarrollo
+    volumes:
+      - vol-emqx-data:/opt/emqx/data/configs/  ##New Mongo Connection
+    
+    environment:
+      
+      EMQX_NAME: IoT_DEV
+      EMQX_HOST: 127.0.0.1
+      TZ: "${TZ}"
+
+      #DEFAULT DASH PASS
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: "${EMQX_DASHBOARD__DEFAULT_PASSWORD}"
+
+      EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS: 1000
+
+      EMQX_AUTHORIZATION__NO_MATCH: deny
+      EQMX_AUTHORIZATION__DENY_ACTION: ignore
+      EMQX_AUTHORIZATION__SOURCES__1__ENABLE: 'false'
