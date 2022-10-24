@@ -4,7 +4,7 @@ services:
 
   node:
     container_name: node
-    image: "node:14"
+    image: "node:16"
     restart: always
     working_dir: /home/node/app
     volumes: 

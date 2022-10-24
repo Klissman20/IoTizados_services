@@ -32,10 +32,8 @@ services:
     extra_hosts:
       - "localhost:192.168.0.106" ##para pruebas en estado de desarrollo
     volumes:
-      - vol-emqx-data:/opt/emqx/data/configs/  ##New Mongo Connection
-    
+      - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
     environment:
-      
       EMQX_NAME: IoT_DEV
       EMQX_HOST: 127.0.0.1
       TZ: "${TZ}"
