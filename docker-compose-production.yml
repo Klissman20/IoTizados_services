@@ -53,7 +53,6 @@ services:
     extra_hosts:
       - "localhost:192.168.0.106" ##para pruebas en estado de desarrollo
     volumes:
-      #- ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
       - vol-emqx-data:/opt/emqx/data/  ##Persistencia
     
     environment:

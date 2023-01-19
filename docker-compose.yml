@@ -1,5 +1,9 @@
 version: '3.7'
 
+volumes:
+  vol-emqx-data:
+    name: foo-emqx-data
+
 services:
 
   mongo:
@@ -30,17 +34,46 @@ services:
     extra_hosts:
       - "localhost:192.168.0.107" ##para pruebas en estado de desarrollo
     volumes:
-      - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
+      - vol-emqx-data:/opt/emqx/data/  #Persistencia
     environment:
       EMQX_NAME: IoT_DEV
-      EMQX_HOST: "${EMQX_HOST}"
+      EMQX_HOST: 127.0.0.1
       TZ: "${TZ}"
 
       #DEFAULT DASH PASS
-      EMQX_DASHBOARD__DEFAULT_PASSWORD: "${EMQX_DASHBOARD__DEFAULT_PASSWORD}"
-
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: '"${EMQX_DASHBOARD__DEFAULT_PASSWORD}"'
       EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS: 1000
 
-      EMQX_AUTHORIZATION__NO_MATCH: deny
-      EQMX_AUTHORIZATION__DENY_ACTION: ignore
-      EMQX_AUTHORIZATION__SOURCES__1__ENABLE: 'false'
+      EMQX_AUTHORIZATION__NO_MATCH: '"deny"'
+      EQMX_AUTHORIZATION__DENY_ACTION: '"ignore"'
+      EMQX_AUTHORIZATION__SOURCES__1__ENABLE: '"false"'
+      EMQX_AUTHORIZATION__SOURCES__2__ENABLE: '"true"'
+      EMQX_AUTHORIZATION__SOURCES__2__COLLECTION: '"mqttaclrules"'
+      EMQX_AUTHORIZATION__SOURCES__2__DATABASE: '"iot-dev"'
+      #EMQX_AUTHORIZATION__SOURCES__2__FILTER__1__USERNAME: '"${username}"'
+      EMQX_AUTHORIZATION__SOURCES__2__SERVER: '"mongo:27017"'
+      EMQX_AUTHORIZATION__SOURCES__2__MONGO_TYPE: '"single"'
+      EMQX_AUTHORIZATION__SOURCES__2__PASSWORD: '"devpass"'
+      EMQX_AUTHORIZATION__SOURCES__2__POOL_SIZE: 8
+      EMQX_AUTHORIZATION__SOURCES__2__USERNAME: '"devuser"'
+      EMQX_AUTHORIZATION__SOURCES__2__TYPE: '"mongodb"'
+
+
+      #EMQX_AUTHENTICATION__1__ENABLE: '"false"'
+      EMQX_AUTHENTICATION__1__BACKEND: '"mongodb"'
+      EMQX_AUTHENTICATION__1__COLLECTION: '"emqxauthrules"'
+      EMQX_AUTHENTICATION__1__DATABASE: '"iot-dev"'
+      EMQX_AUTHENTICATION__1__ENABLE: '"true"'
+      #EMQX_AUTHENTICATION__1__FILTER__USERNAME: '"${username}"'
+      EMQX_AUTHENTICATION__1__IS_SUPERUSER_FIELD: '"is"'
+      EMQX_AUTHENTICATION__1__MECHANISM: '"password_based"'
+      EMQX_AUTHENTICATION__1__MONGO_TYPE: '"single"'
+      EMQX_AUTHENTICATION__1__PASSWORD: '"devpass"'
+      EMQX_AUTHENTICATION__1__PASSWORD_HASH_ALGORITHM__NAME: '"plain"' 
+      EMQX_AUTHENTICATION__1__PASSWORD_HASH_ALGORITHM__SALT_POSITION: '"disable"'
+      EMQX_AUTHENTICATION__1__PASSWORD_HASH_FIELD: '"pass"'
+      EMQX_AUTHENTICATION__1__POOL_SIZE: 8
+      EMQX_AUTHENTICATION__1__SALT_FIELD: '"salt"'
+      EMQX_AUTHENTICATION__1__SERVER: '"mongo:27017"'
+      EMQX_AUTHENTICATION__1__SRV_RECORD: '"false"'
+      EMQX_AUTHENTICATION__1__USERNAME: '"devuser"'
