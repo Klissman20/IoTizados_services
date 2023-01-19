@@ -53,8 +53,8 @@ services:
     extra_hosts:
       - "localhost:192.168.0.106" ##para pruebas en estado de desarrollo
     volumes:
-      - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
-      #- vol-emqx-data:/opt/emqx/data/  ##Persistencia
+      #- ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
+      - vol-emqx-data:/opt/emqx/data/  ##Persistencia
     
     environment:
       
@@ -64,7 +64,6 @@ services:
 
       #DEFAULT DASH PASS
       EMQX_DASHBOARD__DEFAULT_PASSWORD: '"${EMQX_DASHBOARD__DEFAULT_PASSWORD}"'
-
       EMQX_LISTENERS__TCP__DEFAULT__MAX_CONNECTIONS: 1000
 
       EMQX_AUTHORIZATION__NO_MATCH: '"deny"'
