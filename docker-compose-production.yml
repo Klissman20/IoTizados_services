@@ -71,7 +71,7 @@ services:
       EMQX_AUTHORIZATION__SOURCES__2__ENABLE: '"true"'
       EMQX_AUTHORIZATION__SOURCES__2__COLLECTION: '"mqttaclrules"'
       EMQX_AUTHORIZATION__SOURCES__2__DATABASE: '"iot-dev"'
-      EMQX_AUTHORIZATION__SOURCES__2__FILTER__1: 'username = "${username}"'
+      EMQX_AUTHORIZATION__SOURCES__2__FILTER: 'username = "${username}"'
       EMQX_AUTHORIZATION__SOURCES__2__SERVER: '"mongo:27017"'
       EMQX_AUTHORIZATION__SOURCES__2__MONGO_TYPE: '"single"'
       EMQX_AUTHORIZATION__SOURCES__2__PASSWORD: '"devpass"'
