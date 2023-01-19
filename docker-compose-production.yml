@@ -86,7 +86,7 @@ services:
       EMQX_AUTHENTICATION__2__COLLECTION: '"emqxauthrules"'
       EMQX_AUTHENTICATION__2__DATABASE: '"iot-dev"'
       EMQX_AUTHENTICATION__2__ENABLE: '"true"'
-      EMQX_AUTHENTICATION__2__FILTER__USERNAME: '"${username}"'
+      #EMQX_AUTHENTICATION__2__FILTER__USERNAME: '"${username}"'
       EMQX_AUTHENTICATION__2__IS_SUPERUSER_FIELD: '"is"'
       EMQX_AUTHENTICATION__2__MECHANISM: '"password_based"'
       EMQX_AUTHENTICATION__2__MONGO_TYPE: '"single"'
