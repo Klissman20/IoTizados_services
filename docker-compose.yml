@@ -1,7 +1,5 @@
 version: '3.9'
-volumes:
-  vol-emqx-data:
-    name: foo-emqx-data
+
 services:
 
   mongo:
@@ -30,7 +28,7 @@ services:
     links:
       - mongo
     extra_hosts:
-      - "localhost:192.168.0.106" ##para pruebas en estado de desarrollo
+      - "localhost:192.168.0.107" ##para pruebas en estado de desarrollo
     volumes:
       - ./emqxconf:/opt/emqx/data/configs/  ##New Mongo Connection
     environment:
